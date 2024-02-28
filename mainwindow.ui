@@ -100,7 +100,11 @@
         </widget>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="textUnencrypted"/>
+        <widget class="QLineEdit" name="textUnencrypted">
+         <property name="text">
+          <string>МЕЛ ЕМЕЛЯ ЕЛ В МЕЛЬНИЦЕ</string>
+         </property>
+        </widget>
        </item>
        <item row="3" column="2">
         <widget class="QLineEdit" name="messageEncrypted"/>
@@ -140,7 +144,11 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="keysToCrypt"/>
+        <widget class="QLineEdit" name="keysToCrypt">
+         <property name="text">
+          <string>3, 4, 1, 2</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="2">
         <spacer name="horizontalSpacer_12">
@@ -176,7 +184,11 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="keysToUnencrypt"/>
+        <widget class="QLineEdit" name="keysToUnencrypt">
+         <property name="text">
+          <string>3, 4, 1, 2</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="1">
         <widget class="QPushButton" name="btnUnencrypt">
@@ -222,7 +234,11 @@
         </spacer>
        </item>
        <item row="0" column="1" colspan="2">
-        <widget class="QLineEdit" name="textEncrypted"/>
+        <widget class="QLineEdit" name="textEncrypted">
+         <property name="text">
+          <string>ЕБТРАНОВ ИИЯОТ ПБНРЕТИОС</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -263,7 +279,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
