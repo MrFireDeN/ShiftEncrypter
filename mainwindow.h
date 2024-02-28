@@ -19,6 +19,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    QList<int> getKeys(QString);
+    QStringList getBlocks(QString, int);
+
+    void encrypt();
+    void unencrypt();
+
+    void on_btnEncrypt_clicked();
+    void on_btnUnencrypt_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
