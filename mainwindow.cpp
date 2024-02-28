@@ -1,4 +1,3 @@
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -18,6 +17,11 @@ MainWindow::~MainWindow()
 // Создание QList с ключами
 QList<int> MainWindow::getKeys(QString textKeys) {
     QStringList strList = textKeys.split(", ");
+
+    if (!keysValidator(strList)) {
+        QMessageBox::information(nullptr, "Ошибка", "Неверные ключи");
+        return {1};
+    }
 
     QList<int> keysList;
 
@@ -50,6 +54,9 @@ void MainWindow::encrypt() {
     QString textKeys = ui->keysToCrypt->text();
     QString text = ui->textUnencrypted->text();
 
+    if (text == "" or textKeys == "")
+        return;
+
     // Создание QList с ключами
     QList<int> keysList = getKeys(textKeys);
     // Создание блоков
@@ -68,6 +75,8 @@ void MainWindow::encrypt() {
         message += block;
     }
 
+    qDebug() << text << " " << message;
+    calculateFrequancy(text, message);
     ui->messageEncrypted->setText(message);
 }
 
@@ -75,6 +84,9 @@ void MainWindow::unencrypt() {
     // Дополнительные переменные
     QString textKeys = ui->keysToUnencrypt->text();
     QString text = ui->textEncrypted->text();
+
+    if (text == "" or textKeys == "")
+        return;
 
     // Создание QList с ключами
     QList<int> keysList = getKeys(textKeys);
@@ -94,9 +106,55 @@ void MainWindow::unencrypt() {
         message += block;
     }
 
+    calculateFrequancy(message, text);
     ui->messageUnencrypted->setText(message);
 }
 
+// Валидатор для ключей
+bool MainWindow::keysValidator(QStringList keysList) {
+    keysList.sort();
+
+    for (int i = 0; i < keysList.length(); ++i) {
+        if (keysList[i] != QString::number(i+1))
+            return false;
+    }
+
+    return true;
+}
+
+void MainWindow::calculateFrequancy(QString unencrytedText, QString encrytedText) {
+    unencryptedMap.clear();
+    for (QChar letter: unencrytedText) {
+        if (!unencryptedMap.contains(letter)) {
+            unencryptedMap.insert(letter, 1);
+        }
+        else{
+            unencryptedMap[letter]++;
+        }
+    }
+
+    QString result1  = "";
+    for (auto i = unencryptedMap.begin(); i != unencryptedMap.end(); ++i) {
+        result1 += QString("\'") + i.key() + "\': " + QString::number(i.value()) + " ";
+    }
+    ui->frequencyUnencrypted->setText(result1);
+
+    encryptedMap.clear();
+    for (QChar letter: encrytedText) {
+        if (!encryptedMap.contains(letter)) {
+            encryptedMap.insert(letter, 1);
+        }
+        else{
+            encryptedMap[letter]++;
+        }
+    }
+
+    QString result2 = "";
+    for (auto i = encryptedMap.begin(); i != encryptedMap.end(); ++i) {
+        result2 += QString("\'") + i.key() + "\': " + QString::number(i.value()) + " ";
+    }
+    ui->frequencyEncrypted->setText(result2);
+}
 
 void MainWindow::on_btnEncrypt_clicked()
 {
